@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 class UserController extends BaseUserController
 {
     /**
-     * Display a listing of the resource.
+     * Get user list (v1)
      */
-    public function index()
+    public function index(Request $request)
     {
         return [
-            'version one'
+            'version one',
         ];
     }
 }
