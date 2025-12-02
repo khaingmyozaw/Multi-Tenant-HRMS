@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class UserController extends BaseUserController
 {
     /**
-     * Get user list (v1)
+     * Get user list
      */
     public function index(Request $request)
     {
