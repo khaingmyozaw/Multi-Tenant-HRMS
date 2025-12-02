@@ -10,5 +10,5 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends BaseAuthController
 {
-    
+    // 
 }

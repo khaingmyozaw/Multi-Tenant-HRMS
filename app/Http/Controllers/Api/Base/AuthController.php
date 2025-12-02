@@ -4,25 +4,31 @@ namespace App\Http\Controllers\Api\Base;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\Auth;
+use App\Services\Base\AuthService;
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request)
+    /**
+     * Login in
+     */
+    public function login(LoginRequest $request, AuthService $authService): JsonResponse
     {
-        $validated = $request->validated();
-        $request->authenticate();
-
-        $user = Auth::user();
-        $resource = new UserResource($user);
-        $token = $user->createToken('API Token')->accessToken;
+        $request->validated();
+        $request->authenticate(); // login attempt
 
         return api(
             'You successfully logged in.',
-            array_merge(
-                $resource->toArray($request),
-                ['token' => $token]
-            ));
+            $authService->login($request)
+        );
+    }
+
+    /**
+     * Logout
+     */
+    public function logout(AuthService $authService)
+    {
+        $authService->logout();
+        return api('User have been logged out.');
     }
 }
