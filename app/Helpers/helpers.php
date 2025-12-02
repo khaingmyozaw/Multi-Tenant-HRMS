@@ -34,3 +34,26 @@ if (! function_exists('api')) {
         return Response::json($response, $status);
     }
 }
+
+if (! function_exists('error')) {
+    function error(
+        $message = 'Something went wrong!',
+        $error = null,
+        $status = 400
+    ) {
+        $response = [
+            'success' => false,
+            'message' => $message,
+            'data' => null,
+            'error' => $error,
+        ];
+
+        return Response::json($response, $status);
+    }
+}
+
+if (! function_exists('make_username')) {
+    function make_username(String $value) {
+        return strtolower(trim(str_replace(' ', '', $value)));
+    }
+}

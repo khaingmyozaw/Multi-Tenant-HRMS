@@ -4,7 +4,11 @@ namespace App\Services\Base;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthService
 {
@@ -27,5 +31,18 @@ class AuthService
         $user = Auth::user();
         $user->tokens()->delete();
         $user->save();
+
+        Auth::logout();
+    }
+
+    public function register(array $request): Model
+    {
+        return User::create([
+            'uuid' => Str::uuid(),
+            'name' => $request['name'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
     }
 }

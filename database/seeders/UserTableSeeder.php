@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -14,13 +13,13 @@ class UserTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = [
+        User::firstOrCreate([
+            'email' => 'zembi@hr.com',
+        ], [
             'uuid' => (string) Str::uuid(),
             'name' => 'Zembi',
-            'email' => 'zembi@hr.com',
+            'username' => 'zembi',
             'password' => 'password',
-        ];
-
-        User::firstOrCreate($user);
+        ]);
     }
 }
