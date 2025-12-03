@@ -52,7 +52,7 @@ if (! function_exists('error')) {
     function error(
         $message = 'Something went wrong!',
         $error = null,
-        $status = 400
+        $status = 500
     ) {
         $response = [
             'success' => false,
