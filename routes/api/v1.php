@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\IndustryController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,4 +13,6 @@ Route::middleware(['auth:api'])->prefix('v1')->group(function() {
     Route::get('/user', [UserController::class, 'index']);
     
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::apiResource('/industries', IndustryController::class);
 });
