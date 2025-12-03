@@ -31,8 +31,6 @@ class AuthService
         $user = Auth::user();
         $user->tokens()->delete();
         $user->save();
-
-        Auth::logout();
     }
 
     public function register(array $request): Model
