@@ -14,7 +14,7 @@ use Exception;
 class CompanyController extends Controller
 {
     /**
-     * Display a listing of department.
+     * Display a listing of company.
      */
     public function index(
         CompanyRequest $request,

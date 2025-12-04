@@ -13,9 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('departments', function (Blueprint $table) {
-            $table->uuid();
+            $table->uuid('id')->primary();
             $table->foreignIdFor(Company::class, 'company_id');
             $table->string('name');
+            $table->string('short_name')->nullable();
             $table->timestamps();
         });
     }

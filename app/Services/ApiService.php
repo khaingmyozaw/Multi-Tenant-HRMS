@@ -3,26 +3,68 @@
 namespace App\Services;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class ApiService
+abstract class ApiService
 {
-    protected $per_page = 15;
+    /**
+     * Base API resource for CRUD operations
+     *
+     * @method LengthAwarePaginator index(Request $request) Get a list of the resource
+     * @method Model show(int|string $id) Get the specific resource
+     * @method Model store(array $data) Store a newly data
+     * @method bool update(array $data) Update the provide data
+     * @method bool delete(int|string $id) Delete the specific resource
+     */
 
-    protected $page = 1;
+    /** @var class-string<TModel> */
+    protected string $model;
+
+    protected function query(): Builder
+    {
+        return $this->model::query();
+    }
+
+    public function index(Request $request): LengthAwarePaginator
+    {
+        $query = $this->query();
+
+        return $this->makeApiResponse($query, $request);
+    }
+
+    public function store(array $data): Model
+    {
+        return $this->model::create($data);
+    }
+
+    public function show(int|string $id): Model
+    {
+        return $this->model::findOrFail($id);
+    } 
+
+    public function update(array $data): bool
+    {
+        return $this->model::update($data);
+    }
+
+    public function delete(int|string $id): bool
+    {
+        return $this->show($id)->delete();
+    }
 
     /**
      * Apply search value to the query
-     * 
-     * @var Builder $query
-     * @var Request $request
-     * 
-     * @return LengthAwarePaginator
+     *
+     * @var Builder
+     * @var Request
      */
     public function makeApiResponse(Builder $query, Request $request): LengthAwarePaginator
     {
-        $query = $this->applySearch($query, $request);
+        if ($request->filled('search')) {
+            $query = $this->applySearch($query, $request);
+        }
         $query = $this->applyPagination($query, $request);
 
         return $query;
@@ -30,11 +72,9 @@ class ApiService
 
     /**
      * Apply search value to the query
-     * 
-     * @var Builder $query
-     * @var Request $request
-     * 
-     * @return Builder
+     *
+     * @var Builder
+     * @var Request
      */
     public function applySearch(Builder $query, Request $request): Builder
     {
@@ -43,11 +83,9 @@ class ApiService
 
     /**
      * Apply pagination to the query
-     * 
-     * @var Builder $query
-     * @var Request $request
-     * 
-     * @return LengthAwarePaginator
+     *
+     * @var Builder
+     * @var Request
      */
     public function applyPagination(Builder $query, $request): LengthAwarePaginator
     {
@@ -55,10 +93,10 @@ class ApiService
         $page = $request->page;
 
         return $query->paginate(
-            $perPage ?? $this->per_page,
+            $perPage ?? 10,
             ['*'],
             'page',
-            $page ?? $this->page
+            $page ?? 1
         );
     }
 }

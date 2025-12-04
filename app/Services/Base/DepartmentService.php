@@ -2,7 +2,10 @@
 
 namespace App\Services\Base;
 
-class DepartmentService 
+use App\Models\Department;
+use App\Services\ApiService;
+
+class DepartmentService extends ApiService
 {
-    
+    protected string $model = Department::class;
 }
