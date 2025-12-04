@@ -47,6 +47,7 @@ class ApiRequest extends FormRequest
             '*.required' => 'The :attribute field is required.',
             '*.string' => 'the :attribute field must be a string.',
             '*.max' => "The :attribute field max length should be 225 characters.",
+            '*.email' => "The provided email should be a valid email",
         ];
     }
 }

@@ -19,4 +19,28 @@ class CompanyService extends ApiService
 
         return $this->makeApiResponse($query, $request);
     }
+
+    /**
+     * Create company
+     * 
+     * @param array $validated
+     * @return Company
+     */
+    public function store(array $validated): Company
+    {
+        return Company::create($validated);
+    }
+
+    /**
+     * Update Company
+     *
+     * @param  array  $request
+     * @param Company $company
+     * @return bool
+     */
+    public function update(array $validated, Company $company): bool
+    {
+        return $company->update($validated);
+    }
+    
 }

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api\Base;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\CompanyRequest;
+use App\Http\Requests\Company\CreateCompanyRequest;
+use App\Http\Requests\Company\UpdateCompanyRequest;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use App\Services\Base\CompanyService;
-use Illuminate\Http\Request;
+use Exception;
 
 class CompanyController extends Controller
 {
@@ -27,19 +29,23 @@ class CompanyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly company.
      */
-    public function create()
+    public function store(CreateCompanyRequest $request, CompanyService $companyService)
     {
-        //
-    }
+        try {
+            $validated = $request->validated();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+            return api(
+                'Company created successfully',
+                new CompanyResource($companyService->store($validated)),
+                201
+            );
+        } catch (Exception $e) {
+            report($e);
+
+            return error();
+        }
     }
 
     /**
@@ -47,30 +53,39 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
+        return api(
+            'Data fetched successfully',
+            new CompanyResource($company),
+        );
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the specified company.
      */
-    public function edit(Company $company)
-    {
-        //
+    public function update(
+        UpdateCompanyRequest $request,
+        Company $company,
+        CompanyService $companyService
+    ) {
+        try {
+            $validated = $request->validated();
+            $companyService->update($validated, $company);
+
+            return api('The provided company updated successfully.');
+        } catch (Exception $e) {
+            report($e);
+
+            return error('Error while saving data!');
+        }
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Company $company)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
+     * Remove the specified company.
      */
     public function destroy(Company $company)
     {
-        //
+        $company->delete();
+
+        return api('Company deleted successfully.');
     }
 }
