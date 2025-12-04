@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Services\Base;
+
+use App\Models\Company;
+use App\Services\ApiService;
+
+class CompanyService extends ApiService
+{
+    /**
+     * Get list of industries
+     *
+     * @param CompanyRequest
+     * @return LengthAwarePaginator
+     */
+    public function index($request)
+    {
+        $query = Company::query();
+
+        return $this->makeApiResponse($query, $request);
+    }
+}

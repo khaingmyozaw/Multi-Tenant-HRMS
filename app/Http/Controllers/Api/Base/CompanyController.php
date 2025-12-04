@@ -1,22 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\Base;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Department\DepartmentRequest;
-use App\Models\Department;
-use App\Services\Base\DepartmentService;
+use App\Http\Requests\Company\CompanyRequest;
+use App\Http\Resources\CompanyResource;
+use App\Models\Company;
+use App\Services\Base\CompanyService;
 use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
+class CompanyController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of department.
      */
     public function index(
-        DepartmentRequest $request, DepartmentService $departmentService
+        CompanyRequest $request,
+        CompanyService $companyService
     ) {
-        // return api()
+        return api(
+            'Companies are fetched successfully.',
+            CompanyResource::collection($companyService->index($request)),
+            200,
+            true
+        );
     }
 
     /**
@@ -38,7 +45,7 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Department $department)
+    public function show(Company $company)
     {
         //
     }
@@ -46,7 +53,7 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department)
+    public function edit(Company $company)
     {
         //
     }
@@ -54,7 +61,7 @@ class DepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, Company $company)
     {
         //
     }
@@ -62,7 +69,7 @@ class DepartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department)
+    public function destroy(Company $company)
     {
         //
     }

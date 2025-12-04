@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\Base;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateIndustryRequest;
-use App\Http\Requests\IndustryRequest;
-use App\Http\Requests\UpdateIndustryRequest;
+use App\Http\Requests\Industry\CreateIndustryRequest;
+use App\Http\Requests\Industry\IndustryRequest;
+use App\Http\Requests\Industry\UpdateIndustryRequest;
 use App\Http\Resources\IndustryResource;
 use App\Models\Industry;
 use App\Services\Base\IndustryService;

@@ -2,7 +2,7 @@
 
 namespace App\Services\Base;
 
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;

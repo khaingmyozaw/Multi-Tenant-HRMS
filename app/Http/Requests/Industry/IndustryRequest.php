@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Industry;
 
-class UpdateIndustryRequest extends ApiRequest
+use Illuminate\Support\Arr;
+use App\Http\Requests\ApiRequest;
+use Illuminate\Foundation\Http\FormRequest;
+
+class IndustryRequest extends ApiRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,8 +16,7 @@ class UpdateIndustryRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:225',
-            'description' => 'nullable|string',
+            ...parent::rules(),
         ];
     }
 }

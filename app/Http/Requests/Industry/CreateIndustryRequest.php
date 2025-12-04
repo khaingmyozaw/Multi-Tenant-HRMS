@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Industry;
 
+use App\Http\Requests\ApiRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateIndustryRequest extends ApiRequest

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Department;
 
+use App\Http\Requests\ApiRequest;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Arr;
 
-class IndustryRequest extends ApiRequest
+class DepartmentRequest extends ApiRequest
 {
     /**
      * Get the validation rules that apply to the request.
