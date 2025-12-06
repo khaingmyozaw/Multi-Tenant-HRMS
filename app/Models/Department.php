@@ -11,7 +11,7 @@ class Department extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = ['id', 'name', 'short_name'];
+    protected $fillable = ['id', 'name', 'short_name', 'company_id'];
 
     public function company(): BelongsTo
     {

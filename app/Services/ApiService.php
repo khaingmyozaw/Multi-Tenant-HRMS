@@ -42,16 +42,26 @@ abstract class ApiService
     public function show(int|string $id): Model
     {
         return $this->model::findOrFail($id);
-    } 
-
-    public function update(array $data): bool
-    {
-        return $this->model::update($data);
     }
 
-    public function delete(int|string $id): bool
+    public function update(array $validated, int|string|Model $data): Model
     {
-        return $this->show($id)->delete();
+        if (! $data instanceof Model) {
+            $data = $this->show($data);
+        }
+
+        $data->update($validated);
+
+        return $data;
+    }
+
+    public function delete(int|string $data): bool
+    {
+        if (! $data instanceof Model) {
+            $data = $this->show($data);
+        }
+
+        return $data->delete();
     }
 
     /**

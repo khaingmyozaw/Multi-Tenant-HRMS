@@ -14,11 +14,12 @@ class DepartmentResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'short_name' => $this->short_name,
-        ];
+        $data = $this->getBaseResource();
+
+        if (! $request->routeIs('departments.show')) {
+            return $data;
+        }
+        return array_merge($data, $this->getAdditionalResources());
     }
 
     /**
@@ -30,6 +31,8 @@ class DepartmentResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'short_name' => $this->short_name,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 
@@ -39,7 +42,7 @@ class DepartmentResource extends JsonResource
     private function getAdditionalResources(): array
     {
         return [
-            'company' => $this->whenLoaded('company')
+            'company' => new CompanyResource($this->whenLoaded('company')),
         ];
     }
 }
