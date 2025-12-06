@@ -65,6 +65,11 @@ abstract class ApiService
         if ($request->filled('search')) {
             $query = $this->applySearch($query, $request);
         }
+
+        if ($request->filled('sort_by') || $request->filled('sort_direction')) {
+            $query = $this->applySorting($query, $request);
+        }
+
         $query = $this->applyPagination($query, $request);
 
         return $query;
@@ -79,6 +84,17 @@ abstract class ApiService
     public function applySearch(Builder $query, Request $request): Builder
     {
         return $query->where('name', 'ILIKE', "%{$request->search}%");
+    }
+
+    /**
+     * Apply sorting value to the query
+     *
+     * @var Builder
+     * @var Request
+     */
+    public function applySorting(Builder $query, Request $request): Builder
+    {
+        return $query->orderBy($request->sort_by ?? 'id', $request->sort_direction ?? 'asc');
     }
 
     /**
