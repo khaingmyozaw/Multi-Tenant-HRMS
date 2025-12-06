@@ -21,12 +21,12 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (ModelNotFoundException|NotFoundHttpException $e) {
-            return error('The expected data not found!', null, 404);
-        });
+        // $exceptions->render(function (ModelNotFoundException|NotFoundHttpException $e) {
+        //     return error('The expected data not found!', null, 404);
+        // });
 
-        $exceptions->render(function (QueryException $e) {
-            report($e);
-            return error();
-        });
+        // $exceptions->render(function (QueryException $e) {
+        //     report($e);
+        //     return error();
+        // });
     })->create();
