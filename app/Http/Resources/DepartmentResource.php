@@ -42,7 +42,12 @@ class DepartmentResource extends JsonResource
     private function getAdditionalResources(): array
     {
         return [
-            'company' => new CompanyResource($this->whenLoaded('company')),
+            'company' => $this->whenLoaded('company', function($company) {
+                return new CompanyResource($company);
+            }),
+            'companies' => $this->whenLoaded('companies', function ($companies) {
+                return CompanyResource::collection($companies);
+            }),
         ];
     }
 }

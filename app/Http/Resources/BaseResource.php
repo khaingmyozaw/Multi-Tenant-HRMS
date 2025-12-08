@@ -7,8 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class BaseResource extends JsonResource
 {
-    protected $with_related = false;
-
     /**
      * Transform the resource into an array.
      *
@@ -16,14 +14,12 @@ class BaseResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if (! $this->with_related) {
-            return $this->baseResource();
+        $data = $this->baseResource();
+        if (! $request->routeIs('*.show')) {
+            return $data;
         }
 
-        return array_merge(
-            $this->baseResource(),
-            $this->additionalResources()
-        );
+        return array_merge($data, $this->additionalResources());
     }
 
     /**
