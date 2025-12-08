@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\V1\DepartmentController;
 use App\Http\Controllers\Api\V1\IndustryController;
+use App\Http\Controllers\Api\V1\PositionController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,5 @@ Route::middleware(['api'])->prefix('v1')->group(function() {
     Route::apiResource('/industries', IndustryController::class);
     Route::apiResource('/companies', CompanyController::class);
     Route::apiResource('/departments', DepartmentController::class);
+    Route::apiResource('/positions', PositionController::class);
 });
