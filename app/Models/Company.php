@@ -17,4 +17,9 @@ class Company extends Model
     {
         return $this->hasMany(Department::class);
     }
+
+    public function positions(): HasMany
+    {
+        return $this->hasMany(Position::class);
+    }
 }

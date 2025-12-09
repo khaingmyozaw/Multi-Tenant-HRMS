@@ -17,6 +17,7 @@ class CompanyTableSeeder extends Seeder
         Company::factory()
             // ->has(Department::factory(3))
             ->hasDepartments(3)
+            ->hasPositions(6)
             ->count(10)
             ->create();
     }
