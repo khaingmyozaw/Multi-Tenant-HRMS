@@ -1,64 +1,96 @@
 <?php
 
-namespace App\Http\Controllers\Base;
+namespace App\Http\Controllers\Api\Base;
 
-use App\Models\Attendance;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAttendanceRequest;
-use App\Http\Requests\UpdateAttendanceRequest;
+use App\Http\Requests\ApiRequest;
+use App\Http\Requests\Attendance\CreateAttendanceRequest;
+use App\Http\Requests\Attendance\UpdateAttendanceRequest;
+use App\Http\Resources\AttendanceResource;
+use App\Models\Attendance;
+use App\Services\Base\AttendanceService;
+use Exception;
+
+use function Symfony\Component\Clock\now;
 
 class AttendanceController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of attendances.
      */
-    public function index()
-    {
-        //
+    public function index(
+        ApiRequest $request,
+        AttendanceService $service
+    ) {
+        $data = $service->index($request);
+
+        return api(
+            'Attendances are fetched successfully',
+            $data
+        );
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly attendance.
      */
-    public function create()
-    {
-        //
+    public function store(
+        CreateAttendanceRequest $request,
+        AttendanceService $service
+    ) {
+        try {
+            $validated = $request->validated();
+            $data = $service->store($validated);
+
+            return api(
+                'Attendance created successfully',
+                new AttendanceResource($data),
+                201
+            );
+        } catch (Exception $e) {
+            report($e);
+
+            return error('Error while saving attendance');
+        }
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAttendanceRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Display the specified attendance.
      */
     public function show(Attendance $attendance)
     {
-        //
+        return api(
+            'Attendance received successfully',
+            new AttendanceResource($attendance)
+        );
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the specified attendance.
      */
-    public function edit(Attendance $attendance)
+    public function update(
+        UpdateAttendanceRequest $request, 
+        Attendance $attendance,
+        AttendanceService $service
+    )
     {
-        //
+        try {
+            $validated = ['check_out' => now()];
+            $data = $service->update($validated, $attendance);
+
+            return api(
+                'Attendance updated successfully',
+                new AttendanceResource($data),
+                200
+            );
+        } catch (Exception $e) {
+            report($e);
+
+            return error('Error while saving attendance');
+        }
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAttendanceRequest $request, Attendance $attendance)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
+     * Remove the specified attendance.
      */
     public function destroy(Attendance $attendance)
     {

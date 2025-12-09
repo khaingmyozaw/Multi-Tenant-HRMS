@@ -24,6 +24,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'uuid' => Str::uuid(),
             'name' => fake()->name(),
             'username' => fn (array $attrs) => (
                 strtolower(str_replace(' ', '', $attrs['name']))

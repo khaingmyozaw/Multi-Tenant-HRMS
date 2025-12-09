@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -27,7 +28,7 @@ abstract class ApiService
         return $this->model::query();
     }
 
-    public function index(Request $request): LengthAwarePaginator
+    public function index(Request $request): array|Collection|LengthAwarePaginator
     {
         $query = $this->query();
 
