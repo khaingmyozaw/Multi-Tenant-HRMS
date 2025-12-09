@@ -1,8 +1,8 @@
 <?php
 
-use App\GenderEnum;
+use App\Enums\GenderEnum;
+use App\Enums\RelationshipEnum;
 use App\Models\User;
-use App\RelationshipEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

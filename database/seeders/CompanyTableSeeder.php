@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Attendance;
 use App\Models\Company;
 use App\Models\Department;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class CompanyTableSeeder extends Seeder
@@ -18,6 +19,11 @@ class CompanyTableSeeder extends Seeder
             // ->has(Department::factory(3))
             ->hasDepartments(3)
             ->hasPositions(6)
+            ->has(
+                User::factory()
+                    ->count(10)
+                    ->has(Attendance::factory()->count(30))
+            )
             ->count(10)
             ->create();
     }

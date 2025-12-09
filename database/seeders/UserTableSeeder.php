@@ -16,7 +16,6 @@ class UserTableSeeder extends Seeder
         User::firstOrCreate([
             'email' => 'zembi@hr.com',
         ], [
-            'uuid' => (string) Str::uuid(),
             'name' => 'Zembi',
             'username' => 'zembi',
             'password' => 'password',

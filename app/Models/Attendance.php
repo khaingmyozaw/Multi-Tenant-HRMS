@@ -2,24 +2,24 @@
 
 namespace App\Models;
 
-use App\Enums\GenderEnum;
-use App\Enums\RelationshipEnum;
+use App\Enums\AttendanceStatusEnum;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Profile extends Model
+class Attendance extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProfileFactory> */
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
-        'user_id', 'dob',
-        'gender', 'relationship',
-        'nationality', 'race',
-        'address', 'phone',
-        'email', 'education',
-        'image', 'joined_date',
+        'id',
+        'user_id',
+        'company_id',
+        'check_in',
+        'check_out',
+        'status',
+        'location',
     ];
 
     /**
@@ -30,13 +30,17 @@ class Profile extends Model
     protected function casts()
     {
         return [
-            'gender' => GenderEnum::class,
-            'relationship' => RelationshipEnum::class,
+            'status' => AttendanceStatusEnum::class,
         ];
     }
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
     }
 }
