@@ -21,9 +21,12 @@ class AuthController extends Controller
         $request->validated();
         $request->authenticate(); // login attempt
 
+        $res = $authService->login($request);
+
         return api(
-            'You successfully logged in.',
-            $authService->login($request)
+            message: 'You successfully logged in.',
+            data: $res['data'],
+            additional: $res['token'],
         );
     }
 
@@ -53,9 +56,10 @@ class AuthController extends Controller
 
             return api(
                 message: 'User has been registered.',
-                data: [
-                    'user' => $resource->toArray($request),
-                    'token' => $user->createToken('API Token')->accessToken,
+                data: $resource->toArray($request),
+                additional: [
+                    'token_type' => 'Bearer',
+                    'access_token' => $user->createToken('API Register Token')->accessToken,
                 ]
             );
         } catch (Exception $e) {

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('contact_email');
+            $table->string('logo')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -18,12 +18,13 @@ class AuthService
         $resource = new UserResource($user);
         $token = $user->createToken('API Token')->accessToken;
 
-        return array_merge(
-            $resource->toArray($request),
-            [
-                'token' => $token,
-            ]
-        );
+        return [
+            'data' => $resource->toArray($request),
+            'token' => [
+                'token_type' => 'Bearer',
+                'access_token' => $token,
+            ],
+        ];
     }
 
     public function logout(): void

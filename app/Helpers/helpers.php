@@ -8,12 +8,14 @@ if (! function_exists('api')) {
     function api(
         $message,
         $data = null,
-        $status = 200
+        $status = 200,
+        $additional = []
     ) {
         $response = [
             'success' => true,
             'message' => $message,
             'data' => $data,
+            ...$additional,
             'error' => null,
         ];
 
